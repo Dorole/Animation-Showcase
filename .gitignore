@@ -70,3 +70,13 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/Animation Showcase/Library/Artifacts
+/Animation Showcase/Library/Bee/artifacts
+/Animation Showcase/Library
+/Animation Showcase/Temp
+/Animation Showcase/obj
+/Animation Showcase/Logs
+/Animation Showcase/Assets/StarterAssets
+/Animation Showcase/UserSettings
+/Animation Showcase/Assets/TutorialInfo
+Animation Showcase/.vsconfig
