@@ -1,9 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class UserInput : MonoBehaviour
 {
+    public static event Action<Vector2> OnInteractPressed;
+
     [SerializeField] private float _unlockCameraDelay = 0.5f;
 
     private PlayerControls _playerInput;
@@ -13,8 +16,10 @@ public class UserInput : MonoBehaviour
     public bool CameraLookLocked => _cameraLookLocked;
     public Vector2 CurrentMovement { get; private set; }
     public Vector2 Look { get; private set; }
+    public Vector2 CurrentPointerPosition { get; private set; }
     public bool WalkPressed { get; private set; }
     public bool RunPressed { get; private set; }
+    //public bool InteractPressed { get; private set; }
 
 
     private void Awake()
@@ -26,6 +31,8 @@ public class UserInput : MonoBehaviour
         
         _characterControls.Walk.performed += Walk_performed;
         _characterControls.Walk.canceled += Walk_canceled;
+
+        _characterControls.Interact.performed += Interact_performed;
     }
 
     private void Start()
@@ -51,6 +58,16 @@ public class UserInput : MonoBehaviour
     {
         CurrentMovement = Vector2.zero;
         WalkPressed = false;
+    }
+
+    private void Interact_performed(InputAction.CallbackContext ctx)
+    {
+        OnInteractPressed?.Invoke(ReadPointerPosition());
+    }
+
+    private Vector2 ReadPointerPosition()
+    {
+        return _characterControls.PointerPosition.ReadValue<Vector2>();
     }
 
     private void OnEnable()
