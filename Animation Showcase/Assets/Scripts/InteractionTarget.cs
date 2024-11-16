@@ -1,31 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractionTarget : MonoBehaviour, IInteractable
+public class InteractionTarget : MonoBehaviour
 {
-    [SerializeField] private InteractionType _interactionType;
+    [SerializeField] private InteractionData _data;
+
+    public InteractionData GetData() => _data;
+}
+
+[System.Serializable]
+public struct InteractionData
+{
+    public InteractionType InteractionType;
 
     [Tooltip("The point on the object where the player has to walk up to etc.")]
-    [SerializeField] private Transform _interactionPoint;
+    public Transform InteractionPoint;
 
-    //Ok for single interactions
-    //For multiple - implement like a context menu or some other type of selection mechanism
-    public void Interact(InteractionController controller)
-    {
-        switch (_interactionType)
-        {
-            case InteractionType.SIT:
-                controller.SetInteraction(InteractionType.SIT, _interactionPoint);
-                break;
-            case InteractionType.DRINK:
-                controller.SetInteraction(InteractionType.DRINK, _interactionPoint);
-                break;
-            case InteractionType.TALK:
-                controller.SetInteraction(InteractionType.TALK, _interactionPoint);
-                break;
-            default:
-                break;
-        }
-    }
+    [Tooltip("The point on the object the character should align its root with.")]
+    public Vector3 AlignPoint;
+
+    [Tooltip("The point the character should move to once finished with interaction.")]
+    public Vector3 FinishPoint;
 }
+
+
+

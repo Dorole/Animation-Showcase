@@ -1,20 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SitCommand : IInteractCommand
 {
-    private PlayerInteractions _player;
-    private Transform _interactionPoint; 
+    private CharacterMovementController _player;
+    private Transform _interactionPoint;
+    private Animator _animator;
+    private int _animIDSit;
 
-    public SitCommand(PlayerInteractions player, Transform interactionPoint)
+    public SitCommand(CharacterMovementController player, Animator animator, Transform interactionPoint)
     {
         _player = player;
+        _animator = animator;
         _interactionPoint = interactionPoint;
+
+        _animIDSit = Animator.StringToHash("Sit");
     }
 
-    public void Execute()
+
+    public void MoveToInteractionPoint()
     {
-        _player.Sit(_interactionPoint);
+        _player.AutoMove(_interactionPoint);
+        _player.OnAutoMoveComplete += TriggerAnimation;
+    }
+
+    public void TriggerAnimation()
+    {
+        _animator.SetBool(_animIDSit, true);
+        _player.OnAutoMoveComplete -= TriggerAnimation;
     }
 }

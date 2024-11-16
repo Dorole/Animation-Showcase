@@ -1,33 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Windows.Input;
 using UnityEngine;
 
+//nepotrebno?
 public class PlayerInteractions : MonoBehaviour
 {
-    private Animator _animator;
-    private int _animIDSitting;
-    private bool _isSitting = false;
+    private Queue<IInteractCommand> _commandQueue = new Queue<IInteractCommand>();
+    private CharacterMovementController _movementController;
+
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
-        _animIDSitting = Animator.StringToHash("Sit");
+        _movementController = GetComponent<CharacterMovementController>();
+        //_movementController.OnAutoMoveComplete += ExecuteNextCommand;
     }
 
-    public void Sit(Transform interactionPoint)
+    private void OnDestroy()
     {
-        Debug.Log("SIT");
-
-        GetComponent<CharacterMovementController>().AutoMove(interactionPoint);
-
-        //_animator.SetTrigger(_animIDSitting);
+        //_movementController.OnAutoMoveComplete -= ExecuteNextCommand;
     }
 
-
-    // ***** ANIMATION EVENTS *****
-    //Placed at the end of sit-down and stand-up animations
-    public void ToggleSitting()
+    public void AddCommand(IInteractCommand command)
     {
-        _isSitting = !_isSitting;
+        _commandQueue.Enqueue(command);
+        if (_commandQueue.Count == 1) 
+            ExecuteNextCommand();
     }
+
+    private void ExecuteNextCommand()
+    {
+        if (_commandQueue.Count > 0 )
+        {
+            IInteractCommand command = _commandQueue.Dequeue();
+            command.MoveToInteractionPoint();
+        }
+    }
+
+
+
 }

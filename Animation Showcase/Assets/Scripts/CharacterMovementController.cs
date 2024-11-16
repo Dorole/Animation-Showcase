@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,6 +7,8 @@ using UnityEngine.AI;
 public class CharacterMovementController : MonoBehaviour
 {
     #region FIELDS
+    public event Action OnAutoMoveComplete;
+
     [Header("Character")]
     [SerializeField] private float _velocityChangeRate = 10;
 
@@ -27,8 +31,10 @@ public class CharacterMovementController : MonoBehaviour
     private float _velocity = 0;
     private float _targetVelocity = 0;
     private float _rotationVelocity; //ref for rotation smoothing
+    private bool _loopAnimation = false;
 
     private bool _isAutoMoving = false;
+    private Vector3 _autoMoveDestination;
     private Transform _autoMoveTarget;
     #endregion
 
@@ -47,19 +53,20 @@ public class CharacterMovementController : MonoBehaviour
         AssignAnimationIDs();
 
         _navAgent = GetComponent<NavMeshAgent>();
-        _navAgent.updatePosition = false;
-        _navAgent.updateRotation = false; //potentially wrap toggling this 
+        _navAgent.enabled = false;
     }
 
     private void Update()
     {
-        if (!_autoMoveTarget)
+        if (_loopAnimation) return;
+
+        if (!_isAutoMoving)
         {
             HandleMovement();
             HandleRotation();
         }
         else
-            HandleAutoMovement();
+            HandleAutoMovement();      
     }
 
     private void AssignAnimationIDs()
@@ -79,38 +86,67 @@ public class CharacterMovementController : MonoBehaviour
         Vector3 inputDirection = new Vector3(_input.CurrentMovement.x, 0.0f, _input.CurrentMovement.y).normalized;
 
         if (inputDirection != Vector3.zero)
-        {
-            float targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
-            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref _rotationVelocity, _rotationSmoothTime);
-            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-        }
+            SmoothRotateOverTime(inputDirection, _mainCamera.transform.eulerAngles.y);
     }
 
     private void HandleAutoMovement()
     {
+        transform.position = new Vector3(_navAgent.nextPosition.x, _autoMoveDestination.y, _navAgent.nextPosition.z); //temporary fix 
+        _animator.SetFloat(_animIDVelocity, _moveSpeed);
+
         if (_navAgent.remainingDistance <= _navAgent.stoppingDistance)
         {
             _isAutoMoving = false;
-            _autoMoveTarget = null;
-            _animator.SetFloat(_animIDVelocity, 0f);
+            ToggleMovementControl(_isAutoMoving);
+            StartCoroutine(CO_RotateToTargetForward());
             return;
         }
-
-        _animator.SetFloat(_animIDVelocity, _moveSpeed);
-
-
     }
 
-    private void OnAnimatorMove()
+    private IEnumerator CO_RotateToTargetForward()
     {
-        if (_isAutoMoving)
-            transform.position = _animator.rootPosition;        
+        Vector3 targetDirection = _autoMoveTarget.forward;
+
+        while (Vector3.Angle(transform.forward, targetDirection) > 0.1f)
+        {
+            SmoothRotateOverTime(targetDirection, 0f);
+            yield return null;
+        }
+
+        _autoMoveTarget = null;
+        OnAutoMoveComplete?.Invoke();
+    }
+
+    private void SmoothRotateOverTime(Vector3 targetDirection, float cameraY)
+    {
+        float targetRotation = Mathf.Atan2(targetDirection.x, targetDirection.z) * Mathf.Rad2Deg + cameraY;
+        float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref _rotationVelocity, _rotationSmoothTime);
+        transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+    }
+
+    private void ToggleMovementControl(bool isAuto)
+    {
+        _navAgent.enabled = isAuto;
+        _animator.applyRootMotion = !isAuto;
     }
 
     public void AutoMove(Transform target)
     {
         _autoMoveTarget = target;
-        _navAgent.SetDestination(target.position);
         _isAutoMoving = true;
+        ToggleMovementControl(_isAutoMoving);
+
+        _autoMoveDestination = new Vector3(target.position.x, transform.position.y, target.position.z);
+        _navAgent.SetDestination(_autoMoveDestination);
+    }
+
+
+    // ***** ANIMATION EVENTS *****
+    /// <summary>
+    /// Place at the end of transition animations, for example sit-down and stand-up
+    /// </summary>
+    public void StartEndLoop()
+    {
+        _loopAnimation = !_loopAnimation;
     }
 }

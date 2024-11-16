@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IInteractCommand 
 {
-    void Execute();
+    void MoveToInteractionPoint();
+    void TriggerAnimation();
 }
