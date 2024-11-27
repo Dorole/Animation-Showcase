@@ -357,6 +357,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     InteractionType: 1
+    AvailableFromStates: 0
+    ThisState: 0
+    AnimatorParam: 
     InteractionPoint: {fileID: 1217392564}
     AlignPoint: {x: 0, y: 0, z: 0}
     FinishPoint: {x: 0, y: 0, z: 0}
@@ -571,18 +574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
   _animator: {fileID: 0}
---- !u!114 &947198886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488267245}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4af94f7b2192dd24796763df89439bfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _stateManager: {fileID: 0}
 --- !u!195 &947198890
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -605,6 +597,34 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &947198892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488267245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46172a91e1fe17b47966ce860d1e70e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startingState: 1
+--- !u!114 &947198894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488267245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8203c96c6034d45a448a43b4b71e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactionController: {fileID: 0}
+  _player: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &1217392563
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,6 +719,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data:
     InteractionType: 1
+    AvailableFromStates: 5
+    ThisState: 2
+    AnimatorParam: Sit
     InteractionPoint: {fileID: 605280298}
     AlignPoint: {x: 0, y: 0, z: 0}
     FinishPoint: {x: 0, y: 0, z: 0}
@@ -977,7 +1000,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7971684164204289647, guid: 5ee3a07c547315a4e8d8614a396e2a65,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 947198886}
+      addedObject: {fileID: 947198892}
+    - targetCorrespondingSourceObject: {fileID: 7971684164204289647, guid: 5ee3a07c547315a4e8d8614a396e2a65,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 947198894}
   m_SourcePrefab: {fileID: 100100000, guid: 5ee3a07c547315a4e8d8614a396e2a65, type: 3}
 --- !u!1001 &7662215723423305291
 PrefabInstance:
