@@ -362,7 +362,7 @@ MonoBehaviour:
     AnimatorParam: 
     InteractionPoint: {fileID: 1217392564}
     AlignPoint: {x: 0, y: 0, z: 0}
-    FinishPoint: {x: 0, y: 0, z: 0}
+    FinishPoint: {fileID: 1474926144}
 --- !u!4 &429295473 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8718778828885884488, guid: e5f4daf24146ee040b5a2d7a73b30aa0,
@@ -537,7 +537,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: aa38d7b0e367ecc4aac915dcfe957879,
         type: 3}
       propertyPath: m_Name
-      value: Ground_Mesh
+      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -547,6 +547,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1797754024}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa38d7b0e367ecc4aac915dcfe957879,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1797754029}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: aa38d7b0e367ecc4aac915dcfe957879,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1797754025}
   m_SourcePrefab: {fileID: 100100000, guid: aa38d7b0e367ecc4aac915dcfe957879, type: 3}
 --- !u!114 &947198883 stripped
 MonoBehaviour:
@@ -625,6 +633,19 @@ MonoBehaviour:
   _interactionController: {fileID: 0}
   _player: {fileID: 0}
   _animator: {fileID: 0}
+  _animationEvents: {fileID: 0}
+--- !u!114 &947198898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488267245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e544c52cb28db0545951602431ab735a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1217392563
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,6 +720,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1474926143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1474926144}
+  m_Layer: 0
+  m_Name: FinishPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1474926144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474926143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0.645, y: 0, z: -0.541}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1588176905}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1588176900 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5310111241506223875, guid: fd97ab50fe8954dbdad1b63fe7179412,
@@ -718,13 +770,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data:
-    InteractionType: 1
+    InteractionType: 0
     AvailableFromStates: 5
     ThisState: 2
     AnimatorParam: Sit
     InteractionPoint: {fileID: 605280298}
     AlignPoint: {x: 0, y: 0, z: 0}
-    FinishPoint: {x: 0, y: 0, z: 0}
+    FinishPoint: {fileID: 1474926144}
 --- !u!4 &1588176905 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4826344389191740857, guid: fd97ab50fe8954dbdad1b63fe7179412,
@@ -768,6 +820,47 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 43fc45290a3b9bf40ac99591f46d8010, type: 2}
   m_BuildHeightMesh: 0
+--- !u!114 &1797754025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797754020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9eabac95a4620458e9d399e6e8fe8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _data:
+    InteractionType: 1
+    AvailableFromStates: 6
+    ThisState: 1
+    AnimatorParam: Stand
+    InteractionPoint: {fileID: 0}
+    AlignPoint: {x: 0, y: 0, z: 0}
+    FinishPoint: {fileID: 0}
+--- !u!65 &1797754029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797754020}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 30.00001, y: 0.000006636081, z: 32.00001}
+  m_Center: {x: 0, y: 0.00050010695, z: 0}
 --- !u!1001 &2141216602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -838,6 +931,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 605280298}
+    - targetCorrespondingSourceObject: {fileID: 4826344389191740857, guid: fd97ab50fe8954dbdad1b63fe7179412,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1474926144}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5310111241506223875, guid: fd97ab50fe8954dbdad1b63fe7179412,
         type: 3}
@@ -1005,6 +1102,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 947198894}
+    - targetCorrespondingSourceObject: {fileID: 7971684164204289647, guid: 5ee3a07c547315a4e8d8614a396e2a65,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 947198898}
   m_SourcePrefab: {fileID: 100100000, guid: 5ee3a07c547315a4e8d8614a396e2a65, type: 3}
 --- !u!1001 &7662215723423305291
 PrefabInstance:

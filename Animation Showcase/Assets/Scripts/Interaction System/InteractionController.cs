@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(UserInput))]
@@ -29,11 +28,8 @@ public class InteractionController : MonoBehaviour
             {
                 var interactionData = interactionTarget.Data;
 
-                if (_stateManager.IsValidState(interactionData.AvailableFromStates))
-                {
-                    _stateManager.SetState(interactionData.ThisState);
-                    OnInteract?.Invoke(interactionData);
-                }    
+                if (_stateManager.IsValidState(interactionData.AvailableFromStates))                   
+                    OnInteract?.Invoke(interactionData);    
             }
         }
     }

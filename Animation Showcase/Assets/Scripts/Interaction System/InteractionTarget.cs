@@ -5,6 +5,11 @@ public class InteractionTarget : MonoBehaviour
     [SerializeField] private InteractionData _data;
 
     public InteractionData Data => _data; 
+
+    public void SetDynamicInteractionPoint(Transform dynamicPoint)
+    {
+        _data.InteractionPoint = dynamicPoint;
+    }
 }
 
 
@@ -26,7 +31,7 @@ public struct InteractionData
     public Vector3 AlignPoint;
 
     [Tooltip("The point the character should move to once finished with interaction.")]
-    public Vector3 FinishPoint; 
+    public Transform FinishPoint; 
 }
 
 

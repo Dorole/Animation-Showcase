@@ -6,12 +6,10 @@ public class InteractionCommandFactory
     {
         switch (interaction)
         {
-            case EInteractionType.STAND:
-                break;
             case EInteractionType.SIT:
                 return new SitCommand(EInteractionType.SIT, animator);
             case EInteractionType.STAND_UP:
-                break;
+                return new StandCommand(EInteractionType.STAND_UP, animator);
             case EInteractionType.DRINK:
                 break;
             case EInteractionType.TALK:

@@ -33,6 +33,7 @@ public class CharacterMovementController : MonoBehaviour
     private float _rotationVelocity; //ref for rotation smoothing
     private bool _loopAnimation = false;
 
+    private bool _canMove = true;
     private bool _isAutoMoving = false;
     private Vector3 _autoMoveDestination;
     private Transform _autoMoveTarget;
@@ -54,6 +55,8 @@ public class CharacterMovementController : MonoBehaviour
 
         _navAgent = GetComponent<NavMeshAgent>();
         _navAgent.enabled = false;
+
+        CharacterStateManager.OnStateChanged += ToggleCanMove;
     }
 
     private void Update()
@@ -130,6 +133,11 @@ public class CharacterMovementController : MonoBehaviour
         _animator.applyRootMotion = !isAuto;
     }
 
+    private void ToggleCanMove(ECharacterState state)
+    {
+        _canMove = state == ECharacterState.STANDING;
+    }
+
     public void AutoMove(Transform target)
     {
         _autoMoveTarget = target;
@@ -140,7 +148,7 @@ public class CharacterMovementController : MonoBehaviour
         _navAgent.SetDestination(_autoMoveDestination);
     }
 
-
+    
     // ***** ANIMATION EVENTS *****
     /// <summary>
     /// Place at the end of transition animations, for example sit-down and stand-up
